@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Text,
   View,
@@ -28,7 +28,7 @@ function BotonLogout() {
   };
   return (
     <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-      <Text style={styles.logoutBtnText}>🚪 Salir</Text>
+      <Text style={styles.logoutBtnText}>Salir</Text>
     </TouchableOpacity>
   );
 }
@@ -118,13 +118,13 @@ function GraficoCircular({
 // Menú de navegación
 function MenuNavegacion({ rutaActual, esAdmin }: { rutaActual: string; esAdmin: boolean }) {
   const menus = [
-    { ruta: "/dashboard", icono: "🏠", texto: "Inicio" },
-    { ruta: "/fincas", icono: "🌾", texto: "Fincas" },
-    { ruta: "/cultivos", icono: "🌱", texto: "Cultivos" },
-    { ruta: "/riegos", icono: "💧", texto: "Riegos" },
-    { ruta: "/sensores", icono: "📡", texto: "Sensores" },
-    { ruta: "/mediciones", icono: "📈", texto: "Mediciones" },
-    { ruta: "/alertas", icono: "🔔", texto: "Alertas" },
+    { ruta: "/dashboard", icono: "H", texto: "Inicio" },
+    { ruta: "/fincas", icono: "F", texto: "Fincas" },
+    { ruta: "/cultivos", icono: "C", texto: "Cultivos" },
+    { ruta: "/riegos", icono: "R", texto: "Riegos" },
+    { ruta: "/sensores", icono: "S", texto: "Sensores" },
+    { ruta: "/mediciones", icono: "M", texto: "Mide" },
+    { ruta: "/alertas", icono: "A", texto: "Alertas" },
   ];
 
   // Agregar usuarios solo si es administrador
@@ -204,10 +204,10 @@ export default function Dashboard() {
     const luz = 400 + Math.random() * 800;
 
     setMetrics([
-      { label: "Humedad", value: `${humedad.toFixed(1)}%`, icon: "💧", color: "#3B82F6", status: "Simulado" },
-      { label: "Temperatura", value: `${temperatura.toFixed(1)}°C`, icon: "🌡️", color: "#EF4444", status: "Simulado" },
-      { label: "pH", value: ph.toFixed(1), icon: "🧪", color: "#8B5CF6", status: "Simulado" },
-      { label: "Luz", value: `${Math.floor(luz)} lux`, icon: "☀️", color: "#F59E0B", status: "Simulado" },
+      { label: "Humedad", value: `${humedad.toFixed(1)}%`, icon: "H", color: "#3B82F6", status: "Simulado" },
+      { label: "Temperatura", value: `${temperatura.toFixed(1)}°C`, icon: "T", color: "#EF4444", status: "Simulado" },
+      { label: "pH", value: ph.toFixed(1), icon: "pH", color: "#8B5CF6", status: "Simulado" },
+      { label: "Luz", value: `${Math.floor(luz)} lux`, icon: "L", color: "#F59E0B", status: "Simulado" },
     ]);
     setUltimaActualizacion(new Date().toLocaleTimeString());
   }, []);
@@ -290,8 +290,8 @@ export default function Dashboard() {
 
       setMetrics(nuevasMetricas);
       setUltimaActualizacion(new Date().toLocaleTimeString());
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (err) {
+      console.error("Error:", err);
       simularDatos();
       generarDatosSimulados();
     } finally {
@@ -361,17 +361,17 @@ export default function Dashboard() {
   return (
     <View style={{ flex: 1, backgroundColor: "#f3f4f6" }}>
       <View style={styles.header}>
-        <Text style={styles.titulo}>SIMC 🌱</Text>
+        <Text style={styles.titulo}>SIMC</Text>
         <Text style={styles.subtitulo}>Hola, {usuarioNombre}</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
           <Text style={styles.rol}>{usuarioRol}</Text>
           {esAdmin && (
             <TouchableOpacity style={styles.usuariosBtn} onPress={() => router.push('/usuarios')}>
-              <Text style={styles.usuariosBtnText}>👥</Text>
+              <Text style={styles.usuariosBtnText}>U</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity style={styles.perfilBtn} onPress={abrirPerfil}>
-            <Text style={styles.perfilBtnText}>✏️ Editar</Text>
+            <Text style={styles.perfilBtnText}>Editar</Text>
           </TouchableOpacity>
         </View>
         <BotonLogout />
@@ -400,34 +400,34 @@ export default function Dashboard() {
 
       <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={cargarDatos} />}>
         <View style={styles.card}>
-          <Text style={styles.cardTitulo}>Estado General</Text>
+          <Text style={styles.cardTitulo}>Estado del Sistema</Text>
           <Text style={{ color: estado.color, fontSize: 18, fontWeight: 'bold' }}>{estado.texto}</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitulo}>📊 Resumen del Sistema</Text>
-          <Text style={styles.texto}>🌾 Fincas: {fincas.length}</Text>
-          <Text style={styles.texto}>🌱 Cultivos: {cultivos.length}</Text>
-          <Text style={styles.texto}>📡 Sensores: {sensores.length}</Text>
-          <Text style={styles.texto}>💧 Riegos: {riegos.length}</Text>
+          <Text style={styles.cardTitulo}>Resumen General</Text>
+          <Text style={styles.texto}>Fincas: {fincas.length}</Text>
+          <Text style={styles.texto}>Cultivos: {cultivos.length}</Text>
+          <Text style={styles.texto}>Sensores: {sensores.length}</Text>
+          <Text style={styles.texto}>Riegos: {riegos.length}</Text>
         </View>
 
         {/* Gráficos solo para Administrador */}
         {esAdmin && (
           <>
-            <Text style={styles.seccion}>💧 Consumo de Agua (Últimos 7 días)</Text>
+            <Text style={styles.seccion}>Consumo de Agua (7 días)</Text>
             <View style={styles.card}>
               <GraficoBarras titulo="" datos={datosGraficoRiego.length > 0 ? datosGraficoRiego : [{ etiqueta: 'Sin datos', valor: 0 }]} color="#3B82F6" />
             </View>
 
-            <Text style={styles.seccion}>🔔 Alertas por Prioridad</Text>
+            <Text style={styles.seccion}>Alertas por Prioridad</Text>
             <View style={styles.card}>
               <GraficoCircular titulo="" datos={datosGraficoAlertas.length > 0 ? datosGraficoAlertas : [{ etiqueta: 'Sin alertas', valor: 0, color: '#ccc' }]} />
             </View>
           </>
         )}
 
-        <Text style={styles.seccion}>📈 Métricas en Tiempo Real</Text>
+        <Text style={styles.seccion}>Métricas en Tiempo Real</Text>
         <View style={styles.grid}>
           {metrics.map((m, i) => (
             <View key={i} style={styles.metric}>
@@ -448,51 +448,50 @@ export default function Dashboard() {
 }
 
 const styles = StyleSheet.create({
-  header: { backgroundColor: "#2563eb", padding: 20, paddingTop: 50 },
-  titulo: { fontSize: 24, color: "#fff", fontWeight: "bold", textAlign: "center" },
-  subtitulo: { color: "#dbeafe", fontSize: 16, textAlign: "center", marginTop: 8 },
-  rol: { color: "#fff", fontSize: 14, textAlign: "center", backgroundColor: "rgba(255,255,255,0.3)", alignSelf: "center", paddingHorizontal: 12, paddingVertical: 4, borderRadius: 20, marginTop: 8 },
-  card: { backgroundColor: "#fff", margin: 10, padding: 15, borderRadius: 10 },
-  cardTitulo: { fontWeight: "bold", fontSize: 16, marginBottom: 8 },
-  texto: { fontSize: 14, marginVertical: 2 },
-  seccion: { fontSize: 18, fontWeight: "bold", margin: 10 },
+  header: { backgroundColor: "#1e3a8a", padding: 20, paddingTop: 50 },
+  titulo: { fontSize: 22, color: "#fff", fontWeight: "bold", textAlign: "center" },
+  subtitulo: { color: "#bfdbfe", fontSize: 16, textAlign: "center", marginTop: 8 },
+  rol: { color: "#fff", fontSize: 12, textAlign: "center", backgroundColor: "#2563eb", alignSelf: "center", paddingHorizontal: 12, paddingVertical: 4, borderRadius: 20, marginTop: 8 },
+  card: { backgroundColor: "#fff", margin: 10, padding: 15, borderRadius: 10, elevation: 2 },
+  cardTitulo: { fontWeight: "bold", fontSize: 15, marginBottom: 8, color: "#1f2937" },
+  texto: { fontSize: 13, marginVertical: 2, color: "#4b5563" },
+  seccion: { fontSize: 16, fontWeight: "bold", margin: 10, color: "#1f2937" },
   grid: { flexDirection: "row", flexWrap: "wrap", paddingHorizontal: 5 },
-  metric: { width: "45%", margin: "2.5%", backgroundColor: "#fff", padding: 15, borderRadius: 10, alignItems: "center" },
-  metricIcon: { fontSize: 28 },
-  metricLabel: { fontSize: 12, color: "#666", marginTop: 4 },
-  metricValue: { fontSize: 18, fontWeight: "bold", marginTop: 4 },
-  actualizacion: { textAlign: "center", color: "#999", marginVertical: 20 },
-  menu: { flexDirection: "row", backgroundColor: "#2563eb", paddingVertical: 12, paddingBottom: 25, justifyContent: "space-around" },
-  menuItem: { alignItems: "center", paddingHorizontal: 8 },
-  menuItemActivo: { backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5 },
-  menuIcono: { fontSize: 20 },
-  menuTexto: { fontSize: 10, color: "rgba(255,255,255,0.6)", marginTop: 2 },
+  metric: { width: "45%", margin: "2.5%", backgroundColor: "#fff", padding: 12, borderRadius: 10, alignItems: "center", elevation: 2 },
+  metricIcon: { fontSize: 16, fontWeight: "bold", color: "#6b7280" },
+  metricLabel: { fontSize: 11, color: "#6b7280", marginTop: 4 },
+  metricValue: { fontSize: 16, fontWeight: "bold", marginTop: 4 },
+  actualizacion: { textAlign: "center", color: "#9ca3af", marginVertical: 20, fontSize: 12 },
+  menu: { flexDirection: "row", backgroundColor: "#1e3a8a", paddingVertical: 12, paddingBottom: 25, justifyContent: "space-around" },
+  menuItem: { alignItems: "center", paddingHorizontal: 6 },
+  menuItemActivo: { backgroundColor: "#2563eb", borderRadius: 8, paddingHorizontal: 10, paddingVertical: 6 },
+  menuIcono: { fontSize: 14, fontWeight: "bold", color: "#94a3b8" },
+  menuTexto: { fontSize: 9, color: "#94a3b8", marginTop: 2 },
   menuTextoActivo: { color: "#fff", fontWeight: "bold" },
-  logoutBtn: { backgroundColor: "#ef4444", paddingVertical: 10, paddingHorizontal: 20, borderRadius: 20, marginTop: 10, alignSelf: "center" },
-  logoutBtnText: { color: "#fff", fontWeight: "bold" },
-  perfilBtn: { backgroundColor: "#22c55e", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 15, marginLeft: 10 },
-  perfilBtnText: { color: "#fff", fontSize: 12, fontWeight: "bold" },
-  usuariosBtn: { backgroundColor: "#8b5cf6", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 15, marginLeft: 8 },
-  usuariosBtnText: { fontSize: 16 },
+  logoutBtn: { backgroundColor: "#dc2626", paddingVertical: 8, paddingHorizontal: 16, borderRadius: 20, marginTop: 10, alignSelf: "center" },
+  logoutBtnText: { color: "#fff", fontWeight: "bold", fontSize: 12 },
+  perfilBtn: { backgroundColor: "#059669", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 15, marginLeft: 10 },
+  perfilBtnText: { color: "#fff", fontSize: 11, fontWeight: "bold" },
+  usuariosBtn: { backgroundColor: "#7c3aed", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 15, marginLeft: 8 },
+  usuariosBtnText: { fontSize: 12, color: "#fff", fontWeight: "bold" },
   modalOverlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center" },
   modalContent: { backgroundColor: "#fff", borderRadius: 15, padding: 20, width: "85%", maxHeight: "80%" },
-  modalTitulo: { fontSize: 20, fontWeight: "bold", color: "#2563eb", marginBottom: 15, textAlign: "center" },
-  input: { borderWidth: 1, borderColor: "#ddd", borderRadius: 8, padding: 12, marginBottom: 10, backgroundColor: "#f9fafb" },
+  modalTitulo: { fontSize: 18, fontWeight: "bold", color: "#1e3a8a", marginBottom: 15, textAlign: "center" },
+  input: { borderWidth: 1, borderColor: "#d1d5db", borderRadius: 8, padding: 12, marginBottom: 10, backgroundColor: "#f9fafb" },
   botonModal: { backgroundColor: "#2563eb", padding: 12, borderRadius: 8, alignItems: "center", flex: 1, marginHorizontal: 5 },
   botonCancelar: { backgroundColor: "#6b7280" },
   botonModalTexto: { color: "#fff", fontWeight: "bold", textAlign: "center" },
-  // Estilos para gráficos
   graficoContainer: { marginVertical: 10 },
-  graficoTitulo: { fontSize: 14, fontWeight: 'bold', color: '#333', marginBottom: 10 },
+  graficoTitulo: { fontSize: 13, fontWeight: 'bold', color: '#374151', marginBottom: 10 },
   barraFila: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
-  barraEtiqueta: { width: 40, fontSize: 12, color: '#666' },
+  barraEtiqueta: { width: 40, fontSize: 11, color: '#6b7280' },
   barraWrapper: { flex: 1, flexDirection: 'row', alignItems: 'center' },
-  barra: { height: 20, borderRadius: 4, minWidth: 4 },
-  barraValor: { marginLeft: 8, fontSize: 12, color: '#333', fontWeight: 'bold', minWidth: 40 },
+  barra: { height: 18, borderRadius: 4, minWidth: 4 },
+  barraValor: { marginLeft: 8, fontSize: 11, color: '#374151', fontWeight: 'bold', minWidth: 40 },
   graficoCircularContainer: { marginVertical: 10 },
   graficoCircular: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' },
   circularItem: { alignItems: 'center', marginVertical: 8, minWidth: 80 },
-  circularIndicador: { width: 16, height: 16, borderRadius: 8, marginBottom: 4 },
-  circularEtiqueta: { fontSize: 12, color: '#333', fontWeight: 'bold' },
-  circularValor: { fontSize: 11, color: '#666' },
+  circularIndicador: { width: 14, height: 14, borderRadius: 7, marginBottom: 4 },
+  circularEtiqueta: { fontSize: 11, color: '#374151', fontWeight: 'bold' },
+  circularValor: { fontSize: 10, color: '#6b7280' },
 });

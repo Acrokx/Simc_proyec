@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
-from usuarios.views import login_usuario, registro_usuario, logout_usuario
+from usuarios.views import login_usuario, registro_usuario, logout_usuario, editar_perfil
 from cultivos.views import dashboard_view, FincaViewSet, CultivoViewSet, HistorialRiegoViewSet
 from rest_framework.routers import DefaultRouter
 
@@ -50,4 +50,5 @@ urlpatterns = [
     
     # Rutas originales (para compatibilidad)
     path('api/usuarios/', include('usuarios.urls')),
+    path('api/usuarios/perfil/', csrf_exempt(editar_perfil), name='editar_perfil_api'),
 ]

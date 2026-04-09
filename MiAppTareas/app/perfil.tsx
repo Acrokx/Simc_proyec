@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { authService, perfilService } from "./services/api";
@@ -8,12 +8,12 @@ function MenuNavegacion({ rutaActual, esAdmin }: { rutaActual: string; esAdmin: 
     { ruta: "/dashboard", icono: "🏠", texto: "Inicio" },
     { ruta: "/fincas", icono: "🌾", texto: "Fincas" },
     { ruta: "/cultivos", icono: "🌱", texto: "Cultivos" },
+    { ruta: "/riegos", icono: "💧", texto: "Riegos" },
     { ruta: "/sensores", icono: "📡", texto: "Sensores" },
     { ruta: "/mediciones", icono: "📈", texto: "Mediciones" },
     { ruta: "/alertas", icono: "🔔", texto: "Alertas" },
   ];
   
-  // Agregar usuarios solo si es administrador
   if (esAdmin) {
     menus.push({ ruta: "/usuarios", icono: "👥", texto: "Usuarios" });
   }

@@ -5,17 +5,17 @@ import {fincaService, authService} from "./services/api";
 
 function MenuNavegacion({ rutaActual, esAdmin }: { rutaActual: string; esAdmin: boolean }) {
   const menus = [
-    { ruta: "/dashboard", icono: "🏠", texto: "Inicio" },
-    { ruta: "/fincas", icono: "🌾", texto: "Fincas" },
-    { ruta: "/cultivos", icono: "🌱", texto: "Cultivos" },
-    { ruta: "/riegos", icono: "💧", texto: "Riegos" },
-    { ruta: "/sensores", icono: "📡", texto: "Sensores" },
-    { ruta: "/mediciones", icono: "📈", texto: "Mediciones" },
-    { ruta: "/alertas", icono: "🔔", texto: "Alertas" },
+    { ruta: "/dashboard", icono: "H", texto: "Inicio" },
+    { ruta: "/fincas", icono: "F", texto: "Fincas" },
+    { ruta: "/cultivos", icono: "C", texto: "Cultivos" },
+    { ruta: "/riegos", icono: "R", texto: "Riegos" },
+    { ruta: "/sensores", icono: "S", texto: "Sensores" },
+    { ruta: "/mediciones", icono: "M", texto: "Mide" },
+    { ruta: "/alertas", icono: "A", texto: "Alertas" },
   ];
   
   if (esAdmin) {
-    menus.push({ ruta: "/usuarios", icono: "👥", texto: "Usuarios" });
+    menus.push({ ruta: "/usuarios", icono: "U", texto: "Users" });
   }
   
   return (
@@ -140,31 +140,27 @@ export default function Fincas() {
     <View style={styles.item}>
       <View style={{ flex: 1 }}>
         <Text style={styles.itemTitulo}>{item.nombre_finca}</Text>
-        <Text style={styles.itemTexto}>📍 {item.ubicacion}</Text>
-        <Text style={styles.itemTexto}>📐 {item.tamaño_hectareas} hectáreas</Text>
+        <Text style={styles.itemTexto}>Ubicacion: {item.ubicacion}</Text>
+        <Text style={styles.itemTexto}>Tamano: {item.tamaño_hectareas} has</Text>
       </View>
-      {esAdmin && (
-        <View style={styles.botones}>
-          <TouchableOpacity style={styles.btnEditar} onPress={() => editarFinca(item)}>
-            <Text>✏️</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnEliminar} onPress={() => eliminarFinca(item.id)}>
-            <Text>🗑️</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={styles.botones}>
+        <TouchableOpacity style={styles.btnEditar} onPress={() => editarFinca(item)}>
+          <Text>E</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btnEliminar} onPress={() => eliminarFinca(item.id)}>
+          <Text>X</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   return (
     <View style={{ flex: 1, backgroundColor: "#f3f4f6" }}>
       <View style={styles.header}>
-        <Text style={styles.titulo}>🌾 Gestión de Fincas</Text>
-        {esAdmin && (
-          <TouchableOpacity style={styles.btnAgregar} onPress={() => setMostrarForm(!mostrarForm)}>
-            <Text style={styles.btnAgregarText}>{mostrarForm ? "✖️ Cancelar" : "➕ Agregar"}</Text>
-          </TouchableOpacity>
-        )}
+        <Text style={styles.titulo}>Fincas</Text>
+        <TouchableOpacity style={styles.btnAgregar} onPress={() => setMostrarForm(!mostrarForm)}>
+          <Text style={styles.btnAgregarText}>{mostrarForm ? "Cancelar" : "+ Nueva"}</Text>
+        </TouchableOpacity>
       </View>
 
       {mostrarForm && (
@@ -188,24 +184,24 @@ export default function Fincas() {
 
 const styles = StyleSheet.create({
   header: { backgroundColor: "#2563eb", padding: 20, paddingTop: 50 },
-  titulo: { fontSize: 24, color: "#fff", fontWeight: "bold", textAlign: "center" },
+  titulo: { fontSize: 22, color: "#fff", fontWeight: "bold", textAlign: "center" },
   btnAgregar: { backgroundColor: "#22c55e", paddingVertical: 8, paddingHorizontal: 16, borderRadius: 20, alignSelf: "center", marginTop: 10 },
-  btnAgregarText: { color: "#fff", fontWeight: "bold" },
+  btnAgregarText: { color: "#fff", fontWeight: "bold", fontSize: 14 },
   form: { backgroundColor: "#fff", margin: 10, padding: 15, borderRadius: 10 },
   formTitulo: { fontSize: 16, fontWeight: "bold", marginBottom: 10, color: "#2563eb" },
   input: { borderWidth: 1, borderColor: "#ddd", borderRadius: 8, padding: 12, marginBottom: 10 },
   boton: { backgroundColor: "#2563eb", padding: 15, borderRadius: 8, alignItems: "center" },
   botonTexto: { color: "#fff", fontWeight: "bold" },
-  item: { backgroundColor: "#fff", padding: 15, borderRadius: 10, marginBottom: 10, flexDirection: "row", alignItems: "center" },
-  itemTitulo: { fontSize: 18, fontWeight: "bold", color: "#2563eb" },
-  itemTexto: { fontSize: 14, color: "#666", marginTop: 4 },
+  item: { backgroundColor: "#fff", padding: 15, borderRadius: 10, marginBottom: 10, flexDirection: "row", alignItems: "center", elevation: 2 },
+  itemTitulo: { fontSize: 16, fontWeight: "bold", color: "#2563eb" },
+  itemTexto: { fontSize: 13, color: "#666", marginTop: 3 },
   botones: { flexDirection: "row" },
-  btnEditar: { padding: 10, marginRight: 5 },
-  btnEliminar: { padding: 10 },
-  menu: { flexDirection: "row", backgroundColor: "#2563eb", paddingVertical: 12, paddingBottom: 25, justifyContent: "space-around" },
+  btnEditar: { padding: 10, marginRight: 5, backgroundColor: "#f59e0b", borderRadius: 8 },
+  btnEliminar: { padding: 10, backgroundColor: "#ef4444", borderRadius: 8 },
+  menu: { flexDirection: "row", backgroundColor: "#1e3a8a", paddingVertical: 12, paddingBottom: 25, justifyContent: "space-around" },
   menuItem: { alignItems: "center", paddingHorizontal: 8 },
-  menuItemActivo: { backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5 },
-  menuIcono: { fontSize: 20 },
-  menuTexto: { fontSize: 10, color: "rgba(255,255,255,0.6)", marginTop: 2 },
+  menuItemActivo: { backgroundColor: "#2563eb", borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 },
+  menuIcono: { fontSize: 16, fontWeight: "bold", color: "#94a3b8" },
+  menuTexto: { fontSize: 10, color: "#94a3b8", marginTop: 2 },
   menuTextoActivo: { color: "#fff", fontWeight: "bold" },
 });

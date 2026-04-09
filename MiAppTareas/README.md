@@ -1,50 +1,134 @@
-# Welcome to your Expo app 👋
+# SIMC - Frontend (Expo/React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación móvil del Sistema de Monitoreo de Cultivos desarrollada con Expo.
 
-## Get started
+## 📱 Descripción
 
-1. Install dependencies
+Interfaz de usuario para la gestión de fincas, cultivos, riegos, sensores, mediciones y alertas del sistema SIMC.
 
-   ```bash
-   npm install
-   ```
+## 🚀 Inicio Rápido
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Instalación
 
 ```bash
-npm run reset-project
+# Instalar dependencias
+npm install
+
+# Iniciar en desarrollo
+npx expo start
+
+# Opcional: ejecutar en Android
+npx expo start --android
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Requisitos
 
-## Learn more
+- Node.js 18+
+- Expo Go (para probar en móvil)
+- Expo CLI
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📁 Estructura de Archivos
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+app/                          # Páginas principales (file-based routing)
+├── login.tsx                 # Pantalla de inicio de sesión
+├── dashboard.tsx             # Dashboard principal
+├── fincas.tsx                # Gestión de fincas
+├── cultivos.tsx              # Gestión de cultivos
+├── riegos.tsx                # Registro de riegos
+├── sensores.tsx              # Gestión de sensores
+├── mediciones.tsx            # Registro de mediciones
+├── alertas.tsx               # Gestión de alertas
+├── usuarios.tsx              # Administración de usuarios (admin)
+├── perfil.tsx               # Perfil del usuario
+├── services/
+│   └── api.ts               # Cliente API y servicios
+└── _layout.tsx              # Configuración de navegación
 
-## Join the community
+components/                   # Componentes reutilizables
+├── Button.tsx               # Botón personalizado
+├── CardCultivo.tsx          # Tarjeta de cultivo
+└── SensorItem.tsx           # Elemento de sensor
 
-Join our community of developers creating universal apps.
+constants/
+└── theme.ts                 # Configuración de tema y colores
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🎨 Estilos y Temas
+
+La aplicación utiliza:
+- **Colores principales**: Azul (#2563eb), Verde (#22c55e), Rojo (#ef4444)
+- **Estilos**: StyleSheet de React Native
+- **Navegación**: Stack navigator con Expo Router
+
+## 🔌 Integración con API
+
+El frontend se conecta al backend en:
+- **IP por defecto**: `172.31.0.183:8000/api`
+- **Puerto**: 8000
+
+Para modificar la URL, edita `app/services/api.ts` línea 31.
+
+## 🛠️ Scripts Disponibles
+
+| Script | Descripción |
+|--------|-------------|
+| `npm start` | Iniciar servidor Expo |
+| `npm run android` | Ejecutar en Android |
+| `npm run ios` | Ejecutar en iOS |
+| `npm run web` | Ejecutar en navegador |
+| `npm run lint` | Verificar código |
+
+## 📋 Funcionalidades por Pantalla
+
+### Login
+- Validación de correo electrónico
+- Validación de contraseña (mínimo 6 caracteres)
+- Indicador de carga
+
+### Dashboard
+- Métricas en tiempo real (simuladas)
+- Resumen del sistema (fincas, cultivos, sensores, riegos)
+- Gráficos de consumo de agua y alertas (solo admin)
+- Edición de perfil de usuario
+
+### Gestión de Fincas
+- Listado de fincas
+- Crear nueva finca
+- Editar/elimininar (solo admin)
+
+### Gestión de Cultivos
+- Listado de cultivos por finca
+- Selector visual de finca
+- Estado del cultivo
+
+### Riegos
+- Registro histórico de riegos
+- Selector de cultivo
+- Cantidad de agua en litros
+
+### Sensores
+- Gestión de sensores por cultivo
+- Estado (Activo/Inactivo)
+- Ubicación
+
+### Mediciones
+- Registro de mediciones por sensor
+- Valores de humedad
+
+### Alertas
+- Notas/alertas por prioridad
+- Selector visual de prioridad
+- Marcar como leída
+
+### Usuarios (Admin)
+- Listado de agricultores
+- Crear nuevo agricultor
+- Editar/eliminar usuarios
+
+## ⚠️ Notas de Desarrollo
+
+- Los errores de linter en archivos `.py` son falsos positivos (el LSP no detecta el entorno virtual)
+- La autenticación usa correo y contraseña
+- Las métricas del dashboard son simuladas para demostración
+- Los gráficos solo son visibles para administradores

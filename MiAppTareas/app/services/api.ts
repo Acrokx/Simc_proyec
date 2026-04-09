@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
 
 // URL base de la API
 // Configurable via EXPO_PUBLIC_API_URL environment variable
@@ -19,17 +18,14 @@ const getApiUrl = () => {
 
     if (hostFromConfig) {
       const host = hostFromConfig.split(':')[0];
-      if (host && host !== 'localhost' && host !== '127.0.0.1') {
-        return `http://${host}:8000/api`;
-      }
+      return `http://${host}:8000/api`;
     }
-  } catch (e) {
+  } catch {
     // Ignora errores
   }
 
   // Fallback para desarrollo local
-  // IP del equipo para Expo Go y dispositivos en la misma red
-  return 'http://172.31.0.183:8000/api';
+  return 'http://172.31.0.200:8000/api';
 };
 
 const API_URL = getApiUrl();
@@ -84,10 +80,10 @@ api.interceptors.response.use(
             return api(originalRequest);
           }
         }
-      } catch (refreshError) {
-        // Refresh falló, limpiar datos de usuario
-        userData = null;
-      }
+    } catch {
+      // Refresh falló, limpiar datos de usuario
+      userData = null;
+    }
     }
 
     return Promise.reject(error);
@@ -210,7 +206,6 @@ export const agricultorService = {
 // Servicio de perfil de usuario
 export const perfilService = {
   update: async (data: any) => {
-    // Usar los datos del usuario actual del servicio auth
     const currentUser = authService.getUser();
     if (!currentUser?.correo) {
       return { error: 'No hay usuario logueado' };
@@ -225,7 +220,6 @@ export const perfilService = {
     });
     
     if (response.data.success && response.data.usuario) {
-      // Actualizar datos locales
       userData.usuario = response.data.usuario;
     }
     return response.data;
