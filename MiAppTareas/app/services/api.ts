@@ -25,7 +25,8 @@ const getApiUrl = () => {
   }
 
   // Fallback para desarrollo local
-  return 'http://172.31.0.200:8000/api';
+  // Cambiar IP aqui si es necesario para tu red local
+  return 'http://192.168.1.100:8000/api';
 };
 
 const API_URL = getApiUrl();
